@@ -23,8 +23,8 @@
             align-items: center;
             font-weight: bold;
             font-size: 20px;
-            padding:0;
-            margin:0;
+            padding: 0;
+            margin: 0;
         }
     </style>
 </head>
@@ -35,37 +35,43 @@
     <div class="title">
         Calculadora do Mukirana
     </div>
-    <form action="/" method="POST">
+    <form action="/" method="POST" id="meuForm">
         @csrf
         <div class="container-fluid">
             <div class="row mt-2">
                 <div class="col">
                     <label for="exampleFormControlInput1" class="form-label">Valor do Iten R$</label>
-                    <input class="form-control" name="valor1" style='background-color: gray' type="number"
-                        step="any" placeholder="15,50" aria-label="default input example"
-                        value="{{ old('valor1') }}" required>
+                    <input class="form-control" name="valor1" style='background-color: gray' step="any"
+                        placeholder="15,50" aria-label="default input example" value="{{ old('valor1') }}" required
+                        oninput="formatarMoeda(this)" type="text" inputmode="decimal">
                 </div>
                 <div class="col">
                     <label for="exampleFormControlInput1" class="form-label">Quantidade em g/ml</label>
                     <input class="form-control" name="valor2" style='background-color: gray' type="number"
                         step="any" placeholder="290 ml" aria-label="default input example"
-                        value="{{ old('valor2') }}" required>
+                        value="{{ old('valor2') }}" required inputmode="decimal">
                 </div>
             </div>
             <div class="row mt-2">
                 <div class="col">
                     <label for="exampleFormControlInput1" class="form-label">Quantidade de itens da soma</label>
                     <input class="form-control" name="valor3" style='background-color: gray' type="number"
-                        step="any" placeholder="5" aria-label="default input example" value="{{ old('valor3') }}">
+                        step="any" placeholder="5" aria-label="default input example" value="{{ old('valor3') }}"
+                        inputmode="decimal">
                 </div>
                 <div class="col mt-5">
-                        <button type="submit" class="btn btn-success">Calcular</button>
+                    <div class="form-check form-switch">
+                        <input class="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckDefault"
+                            name="valor4">
+                        <label class="form-check-label" for="flexSwitchCheckDefault">Unidade</label>
+                    </div>
                 </div>
             </div>
             <div class="row">
                 <div class="col">
                     <div class="col mt-2 mr-6">
-                        {{-- <button type="submit" class="btn btn-success">Calcular</button> --}}
+                        <button type="button" class="btn btn-secondary" onclick="forcarLimpeza('meuForm')">Limpar</button>
+                        <button type="submit" class="btn btn-success">Calcular</button>
                     </div>
                 </div>
             </div>
@@ -90,6 +96,38 @@
             @endif
         </ul>
     </div>
+    <script>
+        function formatarMoeda(input) {
+            let valor = input.value;
+
+            valor = valor.replace(/\D/g, "");
+
+            // 2. Se o campo estiver vazio, não faz nada
+            if (valor === "") {
+                input.value = "";
+                return;
+            }
+
+            // 3. Transforma em número e divide por 100 para fixar as duas casas decimais
+            // Usamos 'pt-BR' para garantir que o separador seja a vírgula
+            const resultado = (parseFloat(valor) / 100).toLocaleString('pt-BR', {
+                minimumFractionDigits: 2,
+                maximumFractionDigits: 2
+            });
+
+            input.value = resultado;
+        }
+
+        function forcarLimpeza(idFormulario) {
+            const form = document.getElementById(idFormulario);
+
+            // 1. Limpa todos os Inputs (text, number, password, etc)
+            const inputs = form.querySelectorAll('input');
+            inputs.forEach(input => {
+                input.value = '';
+            });
+        }
+    </script>
 </body>
 
 </html>
