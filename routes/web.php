@@ -9,32 +9,34 @@ Route::get('/', function () {
 
 
 Route::post('/', function (Request $request) {
-    if (isset($request->valor1) && isset($request->valor2)) {
+    if (isset($request->valorItem) && isset($request->quantidade)) {
         $frase = '';
-        $valorFloat = (float) str_replace(',', '.', $request->valor1);
+        $valorFloat = (float) str_replace(',', '.', $request->valorItem);
 
         if($request->valor4 == 'on'){
 
-        $resp = $valorFloat / $request->valor2;
+        $resp = $valorFloat / $request->quantidade;
 
         $frase .= "<span class='badge bg-success rounded-pill'>R$ $resp </span>";
         }else{
 
-            $soma = ($valorFloat / $request->valor2) * 1000;
+            $litros = number_format($request->quantidade * $request->quantidadeItems, 0, '', '.');
+
+            $soma = ($valorFloat / $request->quantidade) * 1000;
 
             $somaTotal = $soma / 10;
             $somaTotal =  number_format($somaTotal, 2, ',', '.');
 
             $soma = number_format($soma, 2, ',', '.');
-            // $frase = "$request->valor1 / $request->valor2 = $soma kg/lt <b>ou</b> R$: $sm a cada 100 g/ml";
-            $frase .= " R$: $soma kg/lt <b>ou</b> R$: $somaTotal | 100 g/ml";
+            // $frase = "$request->valorItem / $request->quantidade = $soma kg/lt <b>ou</b> R$: $sm a cada 100 g/ml";
+            $frase .= " Valor Item: {$request->valorItem} | Litros: $litros <br> R$: $somaTotal | 100 g/ml ou R$: $soma kg/lt";
 
-            if (isset($request->valor3)) {
+            if (isset($request->quantidadeItems)) {
 
-                $soma1 = $request->valor2 * $request->valor3;
+                $soma1 = $request->quantidade * $request->quantidadeItems;
                 $soma1 = number_format($soma1, 0, ',', '.');
 
-                $resp = $valorFloat * $request->valor3;
+                $resp = $valorFloat * $request->quantidadeItems;
 
                 $frase .= "<span class='badge bg-success rounded-pill'>R$ $resp </span>";
             }

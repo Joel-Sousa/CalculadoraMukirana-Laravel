@@ -40,30 +40,34 @@
         <div class="container-fluid">
             <div class="row mt-2">
                 <div class="col">
+                    {{-- Input 1 --}}
                     <label for="exampleFormControlInput1" class="form-label">Valor do Iten R$</label>
-                    <input class="form-control" name="valor1" style='background-color: gray' step="any"
-                        placeholder="15,50" aria-label="default input example" value="{{ old('valor1') }}" required
+                    <input class="form-control" name="valorItem" style='background-color: gray' step="any"
+                        placeholder="15,50" aria-label="default input example" value="{{ old('valorItem') }}" required
                         oninput="formatarMoeda(this)" type="text" inputmode="decimal">
                 </div>
                 <div class="col">
+                    {{-- Input 2 --}}
                     <label for="exampleFormControlInput1" class="form-label">Quantidade em g/ml</label>
-                    <input class="form-control" name="valor2" style='background-color: gray' type="number"
+                    <input class="form-control" name="quantidade" style='background-color: gray' type="number"
                         step="any" placeholder="290 ml" aria-label="default input example"
-                        value="{{ old('valor2') }}" required inputmode="decimal">
+                        value="{{ old('quantidade') }}" required inputmode="decimal">
                 </div>
             </div>
             <div class="row mt-2">
                 <div class="col">
+                    {{-- Input 3 --}}
                     <label for="exampleFormControlInput1" class="form-label">Quantidade de itens da soma</label>
-                    <input class="form-control" name="valor3" style='background-color: gray' type="number"
-                        step="any" placeholder="5" aria-label="default input example" value="{{ old('valor3') }}"
+                    <input class="form-control" name="quantidadeItems" style='background-color: gray' type="number"
+                        step="any" placeholder="5" aria-label="default input example" value="{{ old('quantidadeItems') }}"
                         inputmode="decimal">
                 </div>
                 <div class="col mt-5">
                     <div class="form-check form-switch">
+                        {{-- Input 4 --}}
                         <input class="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckDefault"
                             name="valor4">
-                        <label class="form-check-label" for="flexSwitchCheckDefault">Unidade</label>
+                        <label class="form-check-label" for="flexSwitchCheckDefault">Valor do Iten X Quantidade</label>
                     </div>
                 </div>
             </div>
