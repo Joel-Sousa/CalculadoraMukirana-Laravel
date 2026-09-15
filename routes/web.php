@@ -13,11 +13,13 @@ Route::post('/', function (Request $request) {
         $frase = '';
         $valorFloat = (float) str_replace(',', '.', $request->valorItem);
 
+        $nomeProduto = $request->nomeProduto == null ? '' : 'Nome do produto: '.$request->nomeProduto . '<br>';
+
         if($request->valor4 == 'on'){
 
         $resp = $valorFloat / $request->quantidade;
 
-        $frase .= "<span class='badge bg-success rounded-pill'>R$ $resp </span>";
+        $frase .= "<span class='badge bg-success rounded-pill'>$nomeProduto R$ $resp </span>";
         }else{
 
             $litros = number_format($request->quantidade * $request->quantidadeItems, 0, '', '.');
@@ -29,7 +31,7 @@ Route::post('/', function (Request $request) {
 
             $soma = number_format($soma, 2, ',', '.');
             // $frase = "$request->valorItem / $request->quantidade = $soma kg/lt <b>ou</b> R$: $sm a cada 100 g/ml";
-            $frase .= " Valor Item: {$request->valorItem} | Litros: $litros <br> R$: $somaTotal | 100 g/ml ou R$: $soma kg/lt";
+            $frase .= "$nomeProduto Valor Item: {$request->valorItem} | Litros: $litros <br> R$: $somaTotal | 100 g/ml ou R$: $soma kg/lt";
 
             if (isset($request->quantidadeItems)) {
 
